@@ -18,16 +18,17 @@ const LoginScreen = () => {
       style={{
         backgroundColor: whitebg,
         flex: 1,
-        alignItems: 'center',
         justifyContent: 'center',
+        alignItems: 'center',
       }}>
       <Image
         source={logo}
-        style={{height: 200, width: 200, borderRadius: 10}}
+        style={{height: 200, width: 200, borderRadius: 10, marginBottom: 50}}
       />
       <Input
         ref={emailRef}
         placeholder="Email"
+        inputContainerStyle={styles.inputStyle}
         autoFocus
         value={email}
         errorMessage={emailError}
@@ -35,19 +36,19 @@ const LoginScreen = () => {
           setEmailError('');
           setEmail(text);
         }}
-        leftIcon={<Icon name="email" type="material-community" />}
+        leftIcon={<Icon name="mail-outline" type="ionicon" />}
       />
       <Input
         placeholder="Password"
         value={password}
-        style={styles.inputStyle}
+        inputContainerStyle={styles.inputStyle}
         onChangeText={text => setPassword(text)}
         secureTextEntry
-        leftIcon={<Icon name="lock" type="material-community" />}
+        leftIcon={<Icon name="lock-outline" type="material-community" />}
       />
       <Button
         title="Login"
-        style={styles.buttonStyle}
+        buttonStyle={styles.buttonStyle}
         onPress={() => {
           emailRef.current.shake();
           setEmailError('hehehe');
@@ -55,11 +56,11 @@ const LoginScreen = () => {
       />
       <Button
         title="Register"
-        ViewComponent={LinearGradient} // Don't forget this!
-        linearGradientProps={{
-          colors: ['red', 'pink'],
-          start: {x: 0, y: 0.5},
-          end: {x: 1, y: 0.5},
+        buttonStyle={styles.buttonStyle}
+        type="outline"
+        onPress={() => {
+          emailRef.current.shake();
+          setEmailError('hehehe');
         }}
       />
     </KeyboardAvoidingView>
@@ -69,6 +70,6 @@ const LoginScreen = () => {
 export default LoginScreen;
 
 const styles = StyleSheet.create({
-  buttonStyle: {width: 300, marginTop: 10},
-  inputStyle: {width: 200},
+  buttonStyle: {width: 200, marginBottom: 10},
+  inputStyle: {width: 300, alignSelf: 'center'},
 });
