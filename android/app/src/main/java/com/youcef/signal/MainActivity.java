@@ -1,4 +1,4 @@
-package com.signal;
+package com.youcef.signal;
 
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;

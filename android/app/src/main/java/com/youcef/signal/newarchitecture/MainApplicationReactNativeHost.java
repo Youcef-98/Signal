@@ -1,4 +1,4 @@
-package com.signal.newarchitecture;
+package com.youcef.signal.newarchitecture;
 
 import android.app.Application;
 import androidx.annotation.NonNull;
@@ -19,9 +19,9 @@ import com.facebook.react.fabric.CoreComponentsRegistry;
 import com.facebook.react.fabric.FabricJSIModuleProvider;
 import com.facebook.react.fabric.ReactNativeConfig;
 import com.facebook.react.uimanager.ViewManagerRegistry;
-import com.signal.BuildConfig;
-import com.signal.newarchitecture.components.MainComponentsRegistry;
-import com.signal.newarchitecture.modules.MainApplicationTurboModuleManagerDelegate;
+import com.youcef.signal.BuildConfig;
+import com.youcef.signal.newarchitecture.components.MainComponentsRegistry;
+import com.youcef.signal.newarchitecture.modules.MainApplicationTurboModuleManagerDelegate;
 import java.util.ArrayList;
 import java.util.List;
 

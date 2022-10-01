@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "24448100378",
+    "project_id": "signal-a1df7",
+    "storage_bucket": "signal-a1df7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:24448100378:android:53d71ee968e4ab24d749a3",
+        "android_client_info": {
+          "package_name": "com.youcef.signal"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "24448100378-9scjh002d272gpsfno321uepie3lhr9c.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDiYxnOhmkBWKp2Umam0vYu7mdZX5CrSzQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "24448100378-9scjh002d272gpsfno321uepie3lhr9c.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

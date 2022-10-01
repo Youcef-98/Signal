@@ -1,4 +1,4 @@
-package com.signal.newarchitecture.modules;
+package com.youcef.signal.newarchitecture.modules;
 
 import com.facebook.jni.HybridData;
 import com.facebook.react.ReactPackage;
