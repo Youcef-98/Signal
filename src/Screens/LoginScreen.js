@@ -23,7 +23,13 @@ const LoginScreen = () => {
       }}>
       <Image
         source={logo}
-        style={{height: 200, width: 200, borderRadius: 10, marginBottom: 50}}
+        style={{
+          height: 200,
+          width: 200,
+          borderRadius: 10,
+          marginBottom: 50,
+          elevation: 5,
+        }}
       />
       <Input
         ref={emailRef}
