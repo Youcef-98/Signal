@@ -37,7 +37,6 @@ const LoginScreen = () => {
         ref={emailRef}
         placeholder="Email"
         inputContainerStyle={styles.inputStyle}
-        autoFocus
         keyboardType="email-address"
         value={email}
         errorMessage={emailError}
