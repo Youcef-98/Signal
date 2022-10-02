@@ -81,5 +81,5 @@ export default RegisterScreen;
 const styles = StyleSheet.create({
   container: {flex: 1, alignItems: 'center', justifyContent: 'center'},
   inputStyle: {width: 300, alignSelf: 'center'},
-  buttonStyle: {width: 200},
+  buttonStyle: {width: 200, marginBottom: 20},
 });
