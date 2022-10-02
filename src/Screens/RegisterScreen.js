@@ -2,6 +2,7 @@ import {KeyboardAvoidingView, StyleSheet, View} from 'react-native';
 import React, {useRef, useState} from 'react';
 import {Text, Icon, Input, Button} from 'react-native-elements';
 import {useNavigation} from '@react-navigation/native';
+import {whitebg} from '../../assets/colors';
 
 const RegisterScreen = () => {
   const navigation = useNavigation();
@@ -79,7 +80,12 @@ const RegisterScreen = () => {
 export default RegisterScreen;
 
 const styles = StyleSheet.create({
-  container: {flex: 1, alignItems: 'center', justifyContent: 'center'},
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: whitebg,
+  },
   inputStyle: {width: 300, alignSelf: 'center'},
   buttonStyle: {width: 200, marginBottom: 20},
 });
