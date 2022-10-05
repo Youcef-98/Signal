@@ -4,6 +4,8 @@ import {Text, Icon, Input, Button} from 'react-native-elements';
 import {useNavigation} from '@react-navigation/native';
 import {whitebg} from '../../assets/colors';
 
+import auth from '@react-native-firebase/auth';
+
 const RegisterScreen = () => {
   const navigation = useNavigation();
 
@@ -18,6 +20,25 @@ const RegisterScreen = () => {
   const passwordRef = useRef();
   const [password, setPassword] = useState('');
   const [passwordError, setPasswordError] = useState('');
+
+  const register = () => {
+    auth()
+      .createUserWithEmailAndPassword(email, password)
+      .then(() => {
+        console.log('User account created & signed in!');
+      })
+      .catch(error => {
+        if (error.code === 'auth/email-already-in-use') {
+          console.log('That email address is already in use!');
+        }
+
+        if (error.code === 'auth/invalid-email') {
+          console.log('That email address is invalid!');
+        }
+
+        console.error(error);
+      });
+  };
 
   return (
     <KeyboardAvoidingView style={styles.container}>
@@ -70,7 +91,7 @@ const RegisterScreen = () => {
         buttonStyle={styles.buttonStyle}
         type="outline"
         onPress={() => {
-          navigation.navigate('RegisterScreen');
+          register();
         }}
       />
     </KeyboardAvoidingView>
