@@ -1,13 +1,22 @@
-import {KeyboardAvoidingView, StyleSheet, View} from 'react-native';
+import {
+  KeyboardAvoidingView,
+  StyleSheet,
+  Image,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import React, {useRef, useState} from 'react';
 import {Text, Icon, Input, Button} from 'react-native-elements';
-import {useNavigation} from '@react-navigation/native';
-import {whitebg} from '../../assets/colors';
+import {lightGray, whitebg} from '../../assets/colors';
 
+import {launchImageLibrary} from 'react-native-image-picker';
 import auth from '@react-native-firebase/auth';
 
 const RegisterScreen = () => {
-  const navigation = useNavigation();
+  const [photo, setPhoto] = useState(null);
+  const [photoUri, setPhotoUri] = useState(
+    'https://www.pngitem.com/pimgs/m/146-1468479_my-profile-icon-blank-profile-picture-circle-hd.png',
+  );
 
   const nameRef = useRef();
   const [name, setName] = useState('');
@@ -43,11 +52,46 @@ const RegisterScreen = () => {
       });
   };
 
+  const handleChoosePhoto = () => {
+    launchImageLibrary({noData: true}, response => {
+      console.log(response);
+      if (response.didCancel != true) {
+        setPhoto(response.assets[0]);
+        setPhotoUri(response.assets[0].uri);
+      }
+    });
+  };
+
   return (
     <KeyboardAvoidingView style={styles.container}>
-      <Text h3 style={{marginBottom: 50}}>
+      <Text h3 style={{marginBottom: 20}}>
         Create new account
       </Text>
+      <View>
+        <Image
+          source={{
+            uri: photoUri,
+          }}
+          style={{
+            width: 200,
+            height: 200,
+            borderRadius: 200 / 2,
+            marginBottom: 20,
+          }}
+        />
+        <TouchableOpacity
+          onPress={() => {
+            handleChoosePhoto();
+          }}
+          style={{
+            position: 'absolute',
+            zIndex: 5,
+            bottom: 20,
+            right: 0,
+          }}>
+          <Icon name="edit" color={lightGray} type="material" size={40} />
+        </TouchableOpacity>
+      </View>
       <Input
         ref={nameRef}
         placeholder="Full Name"
