@@ -43,6 +43,18 @@ const LoginScreen = () => {
         console.log(user);
       })
       .catch(error => {
+        //@error —  auth/invalid-email Thrown if the email address is not valid.
+
+        // @error — auth/user-disabled Thrown if the user corresponding to the given email has been disabled.
+
+        // @error — auth/user-not-found Thrown if there is no user corresponding to the given email.
+
+        // @error — auth/wrong-password Thrown if the password is invalid for the given email, or the account corresponding to the email does not have a password set.
+
+        // @param email — The users email address.
+
+        // @param password — The users password.
+
         console.log(error.message);
       });
   };
