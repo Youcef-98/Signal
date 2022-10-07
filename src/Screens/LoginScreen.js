@@ -24,7 +24,6 @@ const LoginScreen = () => {
     if (user) {
       navigation.replace('HomeScreen');
     }
-
     setUser(user);
   }
 
@@ -32,6 +31,18 @@ const LoginScreen = () => {
     const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
     return subscriber; // unsubscribe on unmount
   }, []);
+
+  const signIn = () => {
+    auth()
+      .signInWithEmailAndPassword(email, password)
+      .then(user => {
+        navigation.replace('HomeScreen');
+        console.log(user);
+      })
+      .catch(error => {
+        console.log(error.message);
+      });
+  };
 
   return (
     <KeyboardAvoidingView
@@ -77,8 +88,9 @@ const LoginScreen = () => {
         title="Login"
         buttonStyle={styles.buttonStyle}
         onPress={() => {
-          emailRef.current.shake();
-          setEmailError('hehehe');
+          // emailRef.current.shake();
+          // setEmailError('hehehe');
+          signIn();
         }}
       />
       <Button

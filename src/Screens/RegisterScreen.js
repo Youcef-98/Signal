@@ -24,7 +24,10 @@ const RegisterScreen = () => {
   const register = () => {
     auth()
       .createUserWithEmailAndPassword(email, password)
-      .then(() => {
+      .then(user => {
+        user.user.updateProfile({
+          displayName: name,
+        });
         console.log('User account created & signed in!');
       })
       .catch(error => {
