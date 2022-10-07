@@ -31,11 +31,7 @@ const RootApp = () => {
           options={{title: 'Register'}}
           component={RegisterScreen}
         />
-        <Stack.Screen
-          name="HomeScreen"
-          options={{title: 'Signal'}}
-          component={HomeScreen}
-        />
+        <Stack.Screen name="HomeScreen" component={HomeScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
