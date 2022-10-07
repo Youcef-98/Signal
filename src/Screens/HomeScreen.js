@@ -12,7 +12,10 @@ const HomeScreen = () => {
       .signOut()
       .then(() => {
         console.log('User signed out!');
-        navigation.replace('LoginScreen');
+        navigation.reset({
+          index: 0,
+          routes: [{name: 'LoginScreen'}],
+        });
       });
   };
   return (

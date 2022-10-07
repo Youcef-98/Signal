@@ -36,7 +36,10 @@ const LoginScreen = () => {
     auth()
       .signInWithEmailAndPassword(email, password)
       .then(user => {
-        navigation.replace('HomeScreen');
+        navigation.reset({
+          index: 0,
+          routes: [{name: 'HomeScreen'}],
+        });
         console.log(user);
       })
       .catch(error => {
