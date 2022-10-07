@@ -33,7 +33,7 @@ const RootApp = () => {
         />
         <Stack.Screen
           name="HomeScreen"
-          options={{title: 'Home'}}
+          options={{title: 'Signal'}}
           component={HomeScreen}
         />
       </Stack.Navigator>

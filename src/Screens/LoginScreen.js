@@ -21,6 +21,7 @@ const LoginScreen = () => {
 
   // Handle user state changes
   function onAuthStateChanged(user) {
+    console.log(user);
     if (user) {
       navigation.replace('HomeScreen');
     }

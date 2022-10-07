@@ -9,14 +9,16 @@ import React, {useRef, useState} from 'react';
 import {Text, Icon, Input, Button} from 'react-native-elements';
 import {lightGray, whitebg} from '../../assets/colors';
 
+import storage from '@react-native-firebase/storage'; // 1
+
 import {launchImageLibrary} from 'react-native-image-picker';
 import auth from '@react-native-firebase/auth';
 
 const RegisterScreen = () => {
-  const [photo, setPhoto] = useState(null);
-  const [photoUri, setPhotoUri] = useState(
-    'https://www.pngitem.com/pimgs/m/146-1468479_my-profile-icon-blank-profile-picture-circle-hd.png',
-  );
+  let profileUrl =
+    'https://firebasestorage.googleapis.com/v0/b/signal-a1df7.appspot.com/o/default.png?alt=media&token=f33720d3-a833-4ba8-967f-3ce2160ec8b9';
+  const [photoName, setPhotoName] = useState(null);
+  const [photoUri, setPhotoUri] = useState(profileUrl);
 
   const nameRef = useRef();
   const [name, setName] = useState('');
@@ -30,12 +32,14 @@ const RegisterScreen = () => {
   const [password, setPassword] = useState('');
   const [passwordError, setPasswordError] = useState('');
 
-  const register = () => {
-    auth()
+  const register = async () => {
+    console.log(profileUrl);
+    await auth()
       .createUserWithEmailAndPassword(email, password)
-      .then(user => {
+      .then(async user => {
         user.user.updateProfile({
           displayName: name,
+          photoURL: profileUrl,
         });
         console.log('User account created & signed in!');
       })
@@ -56,8 +60,21 @@ const RegisterScreen = () => {
     launchImageLibrary({noData: true}, response => {
       console.log(response);
       if (response.didCancel != true) {
-        setPhoto(response.assets[0]);
+        setPhotoName(response.assets[0].fileName);
         setPhotoUri(response.assets[0].uri);
+        // if user upload an image
+        let reference = storage().ref(response.assets[0].fileName);
+        let task = reference.putFile(response.assets[0].uri);
+        task
+          .then(url => {
+            profileUrl = storage()
+              .ref(response.assets[0].fileName)
+              .getDownloadURL();
+            console.log('updated');
+
+            console.log('Image uploaded to the bucket!');
+          })
+          .catch(e => console.log('uploading image error => ', e));
       }
     });
   };
@@ -137,8 +154,11 @@ const RegisterScreen = () => {
         title="Sign up"
         buttonStyle={styles.buttonStyle}
         type="outline"
-        onPress={() => {
+        onPress={async () => {
           register();
+          //uploadImageToStorage();
+          // const url = await storage().ref('default.png').getDownloadURL();
+          // console.log('url ==>', url);
         }}
       />
     </KeyboardAvoidingView>
