@@ -1,20 +1,37 @@
 import {StyleSheet, Text, View, KeyboardAvoidingView} from 'react-native';
-import React, {useState, useRef} from 'react';
+import React, {useState, useRef, useEffect} from 'react';
 import logo from '../../assets/images/logo.png';
 
 import {Button, Image, Icon, Input} from 'react-native-elements';
 import {blueColor, whitebg} from '../../assets/colors';
 import LinearGradient from 'react-native-linear-gradient';
 import {useNavigation} from '@react-navigation/native';
+import auth from '@react-native-firebase/auth';
 
 const LoginScreen = () => {
   const navigation = useNavigation();
+
+  const [user, setUser] = useState();
 
   const [email, setEmail] = useState('');
   const [emailError, setEmailError] = useState('');
   const emailRef = useRef(null);
 
   const [password, setPassword] = useState('');
+
+  // Handle user state changes
+  function onAuthStateChanged(user) {
+    if (user) {
+      navigation.replace('HomeScreen');
+    }
+
+    setUser(user);
+  }
+
+  useEffect(() => {
+    const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
+    return subscriber; // unsubscribe on unmount
+  }, []);
 
   return (
     <KeyboardAvoidingView
