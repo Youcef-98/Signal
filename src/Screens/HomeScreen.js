@@ -58,7 +58,9 @@ const HomeScreen = () => {
             type="octicon"
             size={25}
             color={blackText}
-            onPress={() => {}}
+            onPress={() => {
+              navigation.navigate('AddChatScreen');
+            }}
           />
         </View>
       ),

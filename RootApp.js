@@ -9,6 +9,7 @@ import {blueColor, whiteText} from './assets/colors';
 import LoginScreen from './src/Screens/LoginScreen';
 import RegisterScreen from './src/Screens/RegisterScreen';
 import HomeScreen from './src/Screens/HomeScreen';
+import AddChatScreen from './src/Screens/AddChatScreen';
 
 const RootApp = () => {
   const Stack = createNativeStackNavigator();
@@ -32,6 +33,12 @@ const RootApp = () => {
           component={RegisterScreen}
         />
         <Stack.Screen name="HomeScreen" component={HomeScreen} />
+
+        <Stack.Screen
+          name="AddChatScreen"
+          options={{title: 'Add a new chat', headerBackTitle: 'Home'}}
+          component={AddChatScreen}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
