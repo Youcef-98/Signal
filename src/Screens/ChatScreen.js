@@ -9,15 +9,17 @@ import {
   TextInput,
   View,
 } from 'react-native';
-import React, {useLayoutEffect, useState} from 'react';
+import React, {useLayoutEffect, useState, useEffect} from 'react';
 import {Icon, Image} from 'react-native-elements';
 import {blueColor, graybg, whitebg, whiteText} from '../../assets/colors';
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
+
 const ChatScreen = ({navigation, route}) => {
   const imageDimension = 40;
-  console.log(route.params.id);
+
   const [message, setMessage] = useState('');
+  const [messages, setMessages] = useState([]);
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -68,19 +70,36 @@ const ChatScreen = ({navigation, route}) => {
             type="ionicon"
             color={whiteText}
             size={25}
-            onPress={() => navigation.goBack()}
+            onPress={() => console.log(route.params.id)}
           />
           <Icon
             name="ios-call-sharp"
             type="ionicon"
             color={whiteText}
             size={25}
-            onPress={() => navigation.goBack()}
+            onPress={() => console.log(messages)}
           />
         </View>
       ),
     });
   }, []);
+
+  useEffect(() => {
+    const unsubscribe = firestore()
+      .collection('chats')
+      .doc(route.params.id)
+      .collection('messages')
+      .orderBy('timestamp', 'desc')
+      .onSnapshot(snapshot =>
+        setMessages(
+          snapshot.docs.map(doc => ({
+            id: doc.id,
+            data: doc.data(),
+          })),
+        ),
+      );
+    return unsubscribe;
+  }, [route]);
 
   const send = () => {
     Keyboard.dismiss();
