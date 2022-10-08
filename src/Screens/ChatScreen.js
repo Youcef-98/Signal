@@ -1,6 +1,6 @@
 import {StyleSheet, Text, View} from 'react-native';
 import React, {useLayoutEffect} from 'react';
-import {Image} from 'react-native-elements';
+import {Icon, Image} from 'react-native-elements';
 import {whiteText} from '../../assets/colors';
 
 const ChatScreen = ({navigation, route}) => {
@@ -10,6 +10,7 @@ const ChatScreen = ({navigation, route}) => {
     navigation.setOptions({
       headerTitleAlign: 'left',
       headerBackTitleVisible: false,
+      headerBackVisible: false,
       headerTitle: () => (
         <View
           style={{
@@ -24,12 +25,45 @@ const ChatScreen = ({navigation, route}) => {
               height: imageDimension,
               width: imageDimension,
               borderRadius: imageDimension / 2,
-              marginRight: 10,
+              marginHorizontal: 10,
             }}
           />
           <Text style={{color: whiteText, fontWeight: '700', fontSize: 16}}>
             {route.params.chatName}
           </Text>
+        </View>
+      ),
+      headerLeft: () => (
+        <Icon
+          name="chevron-left"
+          type="entypo"
+          color={whiteText}
+          size={30}
+          onPress={() => navigation.goBack()}
+        />
+      ),
+      headerRight: () => (
+        <View
+          style={{
+            flexDirection: 'row',
+            width: 80,
+            justifyContent: 'space-between',
+            marginRight: 10,
+          }}>
+          <Icon
+            name="md-videocam"
+            type="ionicon"
+            color={whiteText}
+            size={25}
+            onPress={() => navigation.goBack()}
+          />
+          <Icon
+            name="ios-call-sharp"
+            type="ionicon"
+            color={whiteText}
+            size={25}
+            onPress={() => navigation.goBack()}
+          />
         </View>
       ),
     });
