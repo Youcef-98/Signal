@@ -15,8 +15,9 @@ import {launchImageLibrary} from 'react-native-image-picker';
 import auth from '@react-native-firebase/auth';
 
 const RegisterScreen = () => {
-  let profileUrl =
-    'https://firebasestorage.googleapis.com/v0/b/signal-a1df7.appspot.com/o/default.png?alt=media&token=f33720d3-a833-4ba8-967f-3ce2160ec8b9';
+  const [profileUrl, setProfileUrl] = useState(
+    'https://firebasestorage.googleapis.com/v0/b/signal-a1df7.appspot.com/o/default.png?alt=media&token=f33720d3-a833-4ba8-967f-3ce2160ec8b9',
+  );
   const [photoName, setPhotoName] = useState(null);
   const [photoUri, setPhotoUri] = useState(profileUrl);
 
@@ -66,10 +67,11 @@ const RegisterScreen = () => {
         let reference = storage().ref(response.assets[0].fileName);
         let task = reference.putFile(response.assets[0].uri);
         task
-          .then(url => {
-            profileUrl = storage()
+          .then(() => {
+            const url = storage()
               .ref(response.assets[0].fileName)
               .getDownloadURL();
+            url.then(response => setProfileUrl(response));
             console.log('updated');
 
             console.log('Image uploaded to the bucket!');
