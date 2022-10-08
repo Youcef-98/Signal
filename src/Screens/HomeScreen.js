@@ -7,11 +7,13 @@ import {
   View,
 } from 'react-native';
 import {Avatar, Button, Icon} from 'react-native-elements';
-import React, {useLayoutEffect} from 'react';
+import React, {useLayoutEffect, useState, useEffect} from 'react';
 import auth from '@react-native-firebase/auth';
 import {useNavigation} from '@react-navigation/native';
 import {blackText, whitebg} from '../../assets/colors';
 import ChatItemComponent from '../components/ChatItemComponent';
+
+import firestore from '@react-native-firebase/firestore';
 
 const data = [
   {id: 1, chatName: 'Hello Youtube'},
@@ -21,6 +23,22 @@ const data = [
 
 const HomeScreen = () => {
   const navigation = useNavigation();
+
+  const [chats, setChats] = useState([]);
+
+  useEffect(() => {
+    const unsubscribe = firestore()
+      .collection('chats')
+      .onSnapshot(snapshot =>
+        setChats(
+          snapshot.docs.map(doc => ({
+            id: doc.id,
+            data: doc.data,
+          })),
+        ),
+      );
+    return () => unsubscribe;
+  }, []);
 
   useLayoutEffect(() => {
     navigation.setOptions({
