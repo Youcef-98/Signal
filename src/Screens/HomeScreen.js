@@ -1,9 +1,23 @@
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {
+  FlatList,
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import {Avatar, Button, Icon} from 'react-native-elements';
 import React, {useLayoutEffect} from 'react';
 import auth from '@react-native-firebase/auth';
 import {useNavigation} from '@react-navigation/native';
 import {blackText, whitebg} from '../../assets/colors';
+import ChatItemComponent from '../components/ChatItemComponent';
+
+const data = [
+  {id: 1, chatName: 'Hello Youtube'},
+  {id: 2, chatName: 'Hello Facebook'},
+  {id: 3, chatName: 'Hello instagram'},
+];
 
 const HomeScreen = () => {
   const navigation = useNavigation();
@@ -64,10 +78,16 @@ const HomeScreen = () => {
   };
 
   return (
-    <View style={{flex: 1}}>
-      <Text>HomeScreen</Text>
-      <Button title="Sign up" buttonStyle={styles.button} onPress={signOut} />
-    </View>
+    <SafeAreaView style={{flex: 1}}>
+      <FlatList
+        showsVerticalScrollIndicator={false}
+        data={data}
+        renderItem={({item}) => {
+          return <ChatItemComponent data={item} />;
+        }}
+        key={item => item.id}
+      />
+    </SafeAreaView>
   );
 };
 
