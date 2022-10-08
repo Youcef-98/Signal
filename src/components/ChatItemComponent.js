@@ -12,6 +12,7 @@ const ChatItemComponent = props => {
       style={{backgroundColor: whitebg, marginBottom: 2, flexDirection: 'row'}}
       onPress={() =>
         navigation.navigate('ChatScreen', {
+          id: props.data.id,
           chatName: props.data.data.chatName,
         })
       }>

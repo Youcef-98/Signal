@@ -1,4 +1,5 @@
 import {
+  Keyboard,
   KeyboardAvoidingView,
   Platform,
   SafeAreaView,
@@ -11,10 +12,11 @@ import {
 import React, {useLayoutEffect, useState} from 'react';
 import {Icon, Image} from 'react-native-elements';
 import {blueColor, graybg, whitebg, whiteText} from '../../assets/colors';
-
+import firestore from '@react-native-firebase/firestore';
+import auth from '@react-native-firebase/auth';
 const ChatScreen = ({navigation, route}) => {
   const imageDimension = 40;
-
+  console.log(route.params.id);
   const [message, setMessage] = useState('');
 
   useLayoutEffect(() => {
@@ -79,6 +81,25 @@ const ChatScreen = ({navigation, route}) => {
       ),
     });
   }, []);
+
+  const send = () => {
+    Keyboard.dismiss();
+    console.log(route.params.id);
+    firestore()
+      .collection('chats')
+      .doc(route.params.id)
+      .collection('messages')
+      .add({
+        timestamp: firestore.FieldValue.serverTimestamp(),
+        message,
+        displayName: auth().currentUser.displayName,
+        email: auth().currentUser.email,
+        photoURL: auth().currentUser.photoURL,
+      })
+      .then(response => console.log('done =>', response))
+      .catch(error => console.log('error =>', error));
+    setMessage('');
+  };
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: whitebg}}>
       <KeyboardAvoidingView
@@ -97,9 +118,16 @@ const ChatScreen = ({navigation, route}) => {
             onChangeText={text => setMessage(text)}
             placeholder="Signal Message"
             placeholderTextColor="grey"
+            onSubmitEditing={send}
             style={styles.messageInput}
           />
-          <Icon name="md-send" type="ionicon" color={blueColor} size={25} />
+          <Icon
+            name="md-send"
+            type="ionicon"
+            color={blueColor}
+            size={25}
+            onPress={send}
+          />
         </View>
       </KeyboardAvoidingView>
     </SafeAreaView>
@@ -114,9 +142,7 @@ const styles = StyleSheet.create({
     height: 40,
     flex: 1,
     marginRight: 15,
-    borderColor: 'transparent',
     backgroundColor: graybg,
-    borderWidth: 1,
     paddingHorizontal: 20,
     fontSize: 15,
     color: 'grey',
