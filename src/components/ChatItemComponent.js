@@ -6,6 +6,7 @@ const ChatItemComponent = props => {
   const imageDimension = 60;
   return (
     <TouchableOpacity
+      key={props.data.id}
       style={{backgroundColor: whitebg, marginBottom: 2, flexDirection: 'row'}}>
       <Image
         source={{
@@ -20,7 +21,7 @@ const ChatItemComponent = props => {
       />
       <View style={{flex: 1, justifyContent: 'center'}}>
         <Text style={{color: blackText, fontSize: 15, fontWeight: '800'}}>
-          {props.data.chatName}
+          {props.data.data.chatName}
         </Text>
         <Text style={{color: lightGray, fontSize: 13}}>hello</Text>
       </View>

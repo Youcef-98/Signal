@@ -33,11 +33,11 @@ const HomeScreen = () => {
         setChats(
           snapshot.docs.map(doc => ({
             id: doc.id,
-            data: doc.data,
+            data: doc.data(),
           })),
         ),
       );
-    return () => unsubscribe;
+    return () => unsubscribe();
   }, []);
 
   useLayoutEffect(() => {
@@ -69,7 +69,9 @@ const HomeScreen = () => {
             type="entypo"
             size={25}
             color={blackText}
-            onPress={() => {}}
+            onPress={() => {
+              console.log(chats);
+            }}
           />
           <Icon
             name="pencil"
@@ -101,7 +103,7 @@ const HomeScreen = () => {
     <SafeAreaView style={{flex: 1}}>
       <FlatList
         showsVerticalScrollIndicator={false}
-        data={data}
+        data={chats}
         renderItem={({item}) => {
           return <ChatItemComponent data={item} />;
         }}
