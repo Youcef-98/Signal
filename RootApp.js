@@ -10,6 +10,7 @@ import LoginScreen from './src/Screens/LoginScreen';
 import RegisterScreen from './src/Screens/RegisterScreen';
 import HomeScreen from './src/Screens/HomeScreen';
 import AddChatScreen from './src/Screens/AddChatScreen';
+import ChatScreen from './src/Screens/ChatScreen';
 
 const RootApp = () => {
   const Stack = createNativeStackNavigator();
@@ -38,6 +39,12 @@ const RootApp = () => {
           name="AddChatScreen"
           options={{title: 'Add a new chat', headerBackTitle: 'Home'}}
           component={AddChatScreen}
+        />
+
+        <Stack.Screen
+          name="ChatScreen"
+          options={{headerBackTitle: 'Home'}}
+          component={ChatScreen}
         />
       </Stack.Navigator>
     </NavigationContainer>

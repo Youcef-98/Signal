@@ -1,13 +1,20 @@
 import {StyleSheet, Text, TouchableOpacity, View, Image} from 'react-native';
 import React from 'react';
 import {blackText, lightGray, whitebg} from '../../assets/colors';
+import {useNavigation} from '@react-navigation/native';
 
 const ChatItemComponent = props => {
+  const navigation = useNavigation();
   const imageDimension = 60;
   return (
     <TouchableOpacity
       key={props.data.id}
-      style={{backgroundColor: whitebg, marginBottom: 2, flexDirection: 'row'}}>
+      style={{backgroundColor: whitebg, marginBottom: 2, flexDirection: 'row'}}
+      onPress={() =>
+        navigation.navigate('ChatScreen', {
+          chatName: props.data.data.chatName,
+        })
+      }>
       <Image
         source={{
           uri: 'https://t3.ftcdn.net/jpg/03/46/83/96/360_F_346839683_6nAPzbhpSkIpb8pmAwufkC7c5eD7wYws.jpg',
