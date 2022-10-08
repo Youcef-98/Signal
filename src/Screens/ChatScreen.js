@@ -1,10 +1,21 @@
-import {StyleSheet, Text, View} from 'react-native';
-import React, {useLayoutEffect} from 'react';
+import {
+  KeyboardAvoidingView,
+  Platform,
+  SafeAreaView,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+} from 'react-native';
+import React, {useLayoutEffect, useState} from 'react';
 import {Icon, Image} from 'react-native-elements';
-import {whiteText} from '../../assets/colors';
+import {blueColor, graybg, whitebg, whiteText} from '../../assets/colors';
 
 const ChatScreen = ({navigation, route}) => {
   const imageDimension = 40;
+
+  const [message, setMessage] = useState('');
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -69,12 +80,46 @@ const ChatScreen = ({navigation, route}) => {
     });
   }, []);
   return (
-    <View>
-      <Text>{route.params.chatName}</Text>
-    </View>
+    <SafeAreaView style={{flex: 1, backgroundColor: whitebg}}>
+      <KeyboardAvoidingView
+        behavior={Platform.OS == 'ios' ? 'padding' : 'height'}
+        keyboardVerticalOffset={90}
+        style={{flex: 1}}>
+        <ScrollView style={{flex: 1}}></ScrollView>
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            padding: 15,
+          }}>
+          <TextInput
+            value={message}
+            onChangeText={text => setMessage(text)}
+            placeholder="Signal Message"
+            placeholderTextColor="grey"
+            style={styles.messageInput}
+          />
+          <Icon name="md-send" type="ionicon" color={blueColor} size={25} />
+        </View>
+      </KeyboardAvoidingView>
+    </SafeAreaView>
   );
 };
 
 export default ChatScreen;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  messageInput: {
+    bottom: 0,
+    height: 40,
+    flex: 1,
+    marginRight: 15,
+    borderColor: 'transparent',
+    backgroundColor: graybg,
+    borderWidth: 1,
+    paddingHorizontal: 20,
+    fontSize: 15,
+    color: 'grey',
+    borderRadius: 30,
+  },
+});
