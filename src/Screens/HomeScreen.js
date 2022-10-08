@@ -1,5 +1,5 @@
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import {Avatar, Button} from 'react-native-elements';
+import {Avatar, Button, Icon} from 'react-native-elements';
 import React, {useLayoutEffect} from 'react';
 import auth from '@react-native-firebase/auth';
 import {useNavigation} from '@react-navigation/native';
@@ -21,6 +21,32 @@ const HomeScreen = () => {
           activeOpacity={0.5}>
           <Avatar rounded source={{uri: auth()?.currentUser?.photoURL}} />
         </TouchableOpacity>
+      ),
+      headerRight: () => (
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            width: 100,
+            height: 40,
+            paddingHorizontal: 10,
+          }}>
+          <Icon
+            name="camera"
+            type="entypo"
+            size={25}
+            color={blackText}
+            onPress={() => {}}
+          />
+          <Icon
+            name="pencil"
+            type="octicon"
+            size={25}
+            color={blackText}
+            onPress={() => {}}
+          />
+        </View>
       ),
     });
   }, []);
