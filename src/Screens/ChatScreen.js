@@ -3,7 +3,7 @@ import {
   KeyboardAvoidingView,
   Platform,
   SafeAreaView,
-  ScrollView,
+  FlatList,
   StyleSheet,
   Text,
   TextInput,
@@ -14,6 +14,7 @@ import {Icon, Image} from 'react-native-elements';
 import {blueColor, graybg, whitebg, whiteText} from '../../assets/colors';
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
+import ShowMessage from '../components/ShowMessage';
 
 const ChatScreen = ({navigation, route}) => {
   const imageDimension = 40;
@@ -89,21 +90,20 @@ const ChatScreen = ({navigation, route}) => {
       .collection('chats')
       .doc(route.params.id)
       .collection('messages')
-      .orderBy('timestamp', 'desc')
-      .onSnapshot(snapshot =>
+      .orderBy('timestamp', 'asc')
+      .onSnapshot(snapshot => {
         setMessages(
           snapshot.docs.map(doc => ({
             id: doc.id,
             data: doc.data(),
           })),
-        ),
-      );
+        );
+      });
     return unsubscribe;
-  }, [route]);
+  }, []);
 
   const send = () => {
     Keyboard.dismiss();
-    console.log(route.params.id);
     firestore()
       .collection('chats')
       .doc(route.params.id)
@@ -115,7 +115,7 @@ const ChatScreen = ({navigation, route}) => {
         email: auth().currentUser.email,
         photoURL: auth().currentUser.photoURL,
       })
-      .then(response => console.log('done =>', response))
+      .then(response => console.log('message sent'))
       .catch(error => console.log('error =>', error));
     setMessage('');
   };
@@ -125,7 +125,16 @@ const ChatScreen = ({navigation, route}) => {
         behavior={Platform.OS == 'ios' ? 'padding' : 'height'}
         keyboardVerticalOffset={90}
         style={{flex: 1}}>
-        <ScrollView style={{flex: 1}}></ScrollView>
+        <View style={{flex: 1}}>
+          <FlatList
+            showsVerticalScrollIndicator={false}
+            data={messages}
+            renderItem={({item}) => {
+              return <ShowMessage id={item.id} message={item.data} />;
+            }}
+            key={item => item.id}
+          />
+        </View>
         <View
           style={{
             flexDirection: 'row',
