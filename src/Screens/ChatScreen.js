@@ -90,7 +90,7 @@ const ChatScreen = ({navigation, route}) => {
       .collection('chats')
       .doc(route.params.id)
       .collection('messages')
-      .orderBy('timestamp', 'asc')
+      .orderBy('timestamp', 'desc')
       .onSnapshot(snapshot => {
         setMessages(
           snapshot.docs.map(doc => ({
@@ -129,10 +129,12 @@ const ChatScreen = ({navigation, route}) => {
           <FlatList
             showsVerticalScrollIndicator={false}
             data={messages}
+            inverted
             renderItem={({item}) => {
               return <ShowMessage id={item.id} message={item.data} />;
             }}
             key={item => item.id}
+            contentContainerStyle={{paddingTop: 5}}
           />
         </View>
         <View
