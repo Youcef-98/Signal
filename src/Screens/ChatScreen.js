@@ -103,7 +103,7 @@ const ChatScreen = ({navigation, route}) => {
   }, []);
 
   const send = () => {
-    Keyboard.dismiss();
+    // Keyboard.dismiss();
     firestore()
       .collection('chats')
       .doc(route.params.id)
@@ -122,7 +122,7 @@ const ChatScreen = ({navigation, route}) => {
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: whitebg}}>
       <KeyboardAvoidingView
-        behavior={Platform.OS == 'ios' ? 'padding' : 'height'}
+        behavior={Platform.OS == 'ios' ? 'padding' : null}
         keyboardVerticalOffset={90}
         style={{flex: 1}}>
         <View style={{flex: 1}}>

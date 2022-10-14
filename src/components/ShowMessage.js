@@ -4,7 +4,7 @@ import auth from '@react-native-firebase/auth';
 import {blackText, blueColor, graybg, whiteText} from '../../assets/colors';
 
 const ShowMessage = props => {
-  const isSender = auth().currentUser.email !== props.message.email;
+  const isSender = auth().currentUser.email === props.message.email;
   return (
     <View style={{flex: 1}}>
       <View
