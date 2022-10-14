@@ -35,7 +35,9 @@ const ChatScreen = ({navigation, route}) => {
           }}>
           <Image
             source={{
-              uri: 'https://t3.ftcdn.net/jpg/03/46/83/96/360_F_346839683_6nAPzbhpSkIpb8pmAwufkC7c5eD7wYws.jpg',
+              uri:
+                messages[0]?.data.photoURL ||
+                'https://t3.ftcdn.net/jpg/03/46/83/96/360_F_346839683_6nAPzbhpSkIpb8pmAwufkC7c5eD7wYws.jpg',
             }}
             style={{
               height: imageDimension,
@@ -83,7 +85,7 @@ const ChatScreen = ({navigation, route}) => {
         </View>
       ),
     });
-  }, []);
+  }, [navigation, messages]);
 
   useEffect(() => {
     const unsubscribe = firestore()
@@ -103,21 +105,23 @@ const ChatScreen = ({navigation, route}) => {
   }, []);
 
   const send = () => {
-    // Keyboard.dismiss();
-    firestore()
-      .collection('chats')
-      .doc(route.params.id)
-      .collection('messages')
-      .add({
-        timestamp: firestore.FieldValue.serverTimestamp(),
-        message,
-        displayName: auth().currentUser.displayName,
-        email: auth().currentUser.email,
-        photoURL: auth().currentUser.photoURL,
-      })
-      .then(response => console.log('message sent'))
-      .catch(error => console.log('error =>', error));
-    setMessage('');
+    if (message.length > 0) {
+      // Keyboard.dismiss();
+      firestore()
+        .collection('chats')
+        .doc(route.params.id)
+        .collection('messages')
+        .add({
+          timestamp: firestore.FieldValue.serverTimestamp(),
+          message,
+          displayName: auth().currentUser.displayName,
+          email: auth().currentUser.email,
+          photoURL: auth().currentUser.photoURL,
+        })
+        .then(response => console.log('message sent'))
+        .catch(error => console.log('error =>', error));
+      setMessage('');
+    }
   };
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: whitebg}}>

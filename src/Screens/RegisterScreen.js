@@ -13,6 +13,7 @@ import storage from '@react-native-firebase/storage'; // 1
 
 import {launchImageLibrary} from 'react-native-image-picker';
 import auth from '@react-native-firebase/auth';
+import {showError} from '../utils/ToastMessages';
 
 const RegisterScreen = () => {
   const [profileUrl, setProfileUrl] = useState(
@@ -46,14 +47,12 @@ const RegisterScreen = () => {
       })
       .catch(error => {
         if (error.code === 'auth/email-already-in-use') {
-          console.log('That email address is already in use!');
+          showError('That email address is already in use!');
         }
 
         if (error.code === 'auth/invalid-email') {
-          console.log('That email address is invalid!');
+          showError('That email address is invalid!');
         }
-
-        console.error(error);
       });
   };
 
@@ -158,9 +157,6 @@ const RegisterScreen = () => {
         type="outline"
         onPress={async () => {
           register();
-          //uploadImageToStorage();
-          // const url = await storage().ref('default.png').getDownloadURL();
-          // console.log('url ==>', url);
         }}
       />
     </KeyboardAvoidingView>

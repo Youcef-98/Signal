@@ -6,6 +6,7 @@ import {Input, Icon, Button, Image} from 'react-native-elements';
 
 import firestore from '@react-native-firebase/firestore';
 import {useNavigation} from '@react-navigation/native';
+import {showSuccess} from '../utils/ToastMessages';
 
 const AddChatScreen = () => {
   const navigation = useNavigation();
@@ -20,7 +21,9 @@ const AddChatScreen = () => {
       .add({
         chatName: chatName,
       })
-      .then(() => navigation.goBack())
+      .then(() => {
+        showSuccess('Chat created successfully'), navigation.goBack();
+      })
       .catch(error => console.log('error in send to firestore ==>', error));
   };
   return (
@@ -57,6 +60,7 @@ const AddChatScreen = () => {
       />
       <Button
         title="Create new chat"
+        disabled={chatName < 1}
         buttonStyle={styles.buttonStyle}
         type="outline"
         onPress={async () => {

@@ -7,6 +7,7 @@ import {blueColor, whitebg} from '../../assets/colors';
 import LinearGradient from 'react-native-linear-gradient';
 import {useNavigation} from '@react-navigation/native';
 import auth from '@react-native-firebase/auth';
+import {showError} from '../utils/ToastMessages';
 
 const LoginScreen = () => {
   const navigation = useNavigation();
@@ -44,19 +45,22 @@ const LoginScreen = () => {
         console.log(user);
       })
       .catch(error => {
-        //@error —  auth/invalid-email Thrown if the email address is not valid.
-
-        // @error — auth/user-disabled Thrown if the user corresponding to the given email has been disabled.
-
-        // @error — auth/user-not-found Thrown if there is no user corresponding to the given email.
-
-        // @error — auth/wrong-password Thrown if the password is invalid for the given email, or the account corresponding to the email does not have a password set.
-
-        // @param email — The users email address.
-
-        // @param password — The users password.
-
-        console.log(error.message);
+        if (error.code == 'auth/invalid-email') {
+          showError('Wrong email format');
+        }
+        if (error.code == 'auth/user-disabled') {
+          showError(
+            'The user corresponding to the given email has been disabled',
+          );
+        }
+        if (error.code == 'auth/user-not-found') {
+          showError('There is no user corresponding to the given email');
+        }
+        if (error.code == 'auth/wrong-password') {
+          showError(
+            'The password is invalid for the given email, or the account corresponding to the email does not have a password set',
+          );
+        }
       });
   };
 
@@ -104,8 +108,6 @@ const LoginScreen = () => {
         title="Login"
         buttonStyle={styles.buttonStyle}
         onPress={() => {
-          // emailRef.current.shake();
-          // setEmailError('hehehe');
           signIn();
         }}
       />

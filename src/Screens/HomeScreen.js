@@ -51,7 +51,11 @@ const HomeScreen = () => {
           style={{marginLeft: 5}}
           onPress={signOut}
           activeOpacity={0.5}>
-          <Avatar rounded source={{uri: auth()?.currentUser?.photoURL}} />
+          <Avatar
+            rounded
+            size={44}
+            source={{uri: auth()?.currentUser?.photoURL}}
+          />
         </TouchableOpacity>
       ),
       headerRight: () => (

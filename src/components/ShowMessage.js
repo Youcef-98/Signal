@@ -19,9 +19,10 @@ const ShowMessage = props => {
           },
         ]}>
         <Text
-          style={
-            isSender ? styles.messageTextSender : styles.messageTextReceiver
-          }>
+          style={[
+            isSender ? styles.messageTextSender : styles.messageTextReceiver,
+            {fontWeight: '400', fontSize: 14},
+          ]}>
           {props.message.message}
         </Text>
         <Image
@@ -37,7 +38,11 @@ const ShowMessage = props => {
             },
           ]}
         />
-        {!isSender && <Text style={{}}>{props.message.displayName}</Text>}
+        {!isSender && (
+          <Text style={{fontSize: 11, fontWeight: '300', color: '#F1F1F1'}}>
+            {props.message.displayName}
+          </Text>
+        )}
       </View>
     </View>
   );
